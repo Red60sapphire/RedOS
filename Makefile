@@ -7,7 +7,7 @@ RUST_FILES=$(shell find external/v86/src/rust/ -name '*.rs') \
 
 all: submodules build/bootstrap \
 		external-libs v86 \
-	 	bin/chimerix.ajs external/red-browserjs/packages/chrome/dist/index.html apps/libfileview.lib/icons \
+	 	bin/chimerix.ajs external/red-browser.js/packages/chrome/dist/index.html apps/libfileview.lib/icons \
 		bundle \
 		public/config.json \
 
@@ -126,17 +126,17 @@ build/lib/v86.wasm: $(RUST_FILES) external/v86/build/softfloat.o external/v86/bu
 v86: libv86.js build/lib/v86.wasm
 	cp -r external/v86/bios public
 
-bin/chimerix.ajs: external/chimerix/src/*
+bin/chimerix.ajs: external/aethera/src/*
 	mkdir -p build/bin
-	cd external/chimerix; npm i
-	cd external/chimerix; npx rollup -c rollup.config.js
-	cp external/chimerix/dist/chimerix.ajs bin/chimerix.ajs
+	cd external/aethera; npm i
+	cd external/aethera; npx rollup -c rollup.config.js
+	cp external/aethera/dist/aethera.ajs bin/chimerix.ajs
 
-external/red-browserjs/packages/chrome/dist/index.html: external/red-browserjs/packages/chrome/package.json external/red-browserjs/packages/chrome/src/*.ts external/red-browserjs/packages/chrome/src/*.tsx external/red-browserjs/packages/scramjet/package.json external/red-browserjs/packages/scramjet/packages/core/src/*.ts
-	cd external/red-browserjs; pnpm i
-	cd external/red-browserjs/packages/scramjet/packages/core; pnpm rewriter:build
-	cd external/red-browserjs; pnpm build && pnpm build:dreamland
-	cd external/red-browserjs/packages/chrome; pnpm build
+external/red-browser.js/packages/chrome/dist/index.html: external/red-browser.js/packages/chrome/package.json external/red-browser.js/packages/chrome/src/*.ts external/red-browser.js/packages/chrome/src/*.tsx external/red-browser.js/packages/scramjet/package.json external/red-browser.js/packages/scramjet/packages/core/src/*.ts
+	cd external/red-browser.js; pnpm i
+	cd external/red-browser.js/packages/scramjet/packages/core; pnpm rewriter:build
+	cd external/red-browser.js; pnpm build && pnpm build:dreamland
+	cd external/red-browser.js/packages/chrome; pnpm build
 
 apps/libfileview.lib/icons: apps/libfileview.lib/icons.json
 	cd apps/libfileview.lib; bash geticons.sh
@@ -183,7 +183,7 @@ static: all
 	cp -r build/* static/
 	cp -r bin static/
 	cp -r apps static/
-	cp -r external/red-browserjs/packages/chrome/dist static/browser
+	cp -r external/red-browser.js/packages/chrome/dist static/browser
 
 server: FORCE
 	cd server; node server.js

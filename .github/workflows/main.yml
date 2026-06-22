@@ -63,10 +63,10 @@ jobs:
         run: sudo apt update && sudo apt install -y git build-essential clang default-jre gcc-multilib
 
       - name: Setup Rewriter Toolchain
-        uses: ./external/red-browserjs/packages/scramjet/.github/actions/setup-rewriter-toolchain
+        uses: ./external/red-browser.js/packages/scramjet/.github/actions/setup-rewriter-toolchain
         with:
           wasm-bindgen-version: ${{ env.WASM_BINDGEN_VERSION }}
-          rewriter-path: external/red-browserjs/packages/scramjet/packages/core/rewriter
+          rewriter-path: external/red-browser.js/packages/scramjet/packages/core/rewriter
           github-token: ${{ github.token }}
 
       - name: Pack Red

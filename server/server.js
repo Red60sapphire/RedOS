@@ -58,7 +58,7 @@ app.use("/bin", express.static(__dirname + "/bin"));
 app.use("/apps", express.static(__dirname + "/apps"));
 app.use(
 	"/browser",
-	express.static(__dirname + "/external/red-browserjs/packages/chrome/dist"),
+	express.static(__dirname + "/external/red-browser.js/packages/chrome/dist"),
 );
 
 const server = app.listen(port, () => console.log("Listening on port: ", port));
