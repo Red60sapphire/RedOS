@@ -27,7 +27,7 @@ const gangstaBootsplash = (
 		<br id="systemstatus-br" style="display: none;" />
 		<h2 id="systemstatus" style="display: none;"></h2>
 		<span style="position: absolute; bottom: 1rem; left: 1rem; text-align: left;">
-			Copyright © 2022-2026<br></br>Mercury Workshop
+			Copyright © 2022-2026
 		</span>
 	</div>
 );
