@@ -3,7 +3,7 @@ class Networking {
 	libcurl_src = "/libs/libcurl/libcurl.mjs";
 	libcurl_wasm = "/libs/libcurl/libcurl.wasm";
 	external = {
-		fetch: window.fetch.bind(window),
+		fetch: (req: any, opts?: any) => window.fetch(req, opts),
 	};
 	WebSocket: typeof WebSocket;
 	Socket: any;
@@ -148,7 +148,7 @@ class Networking {
 				return new Response();
 			}
 		} else {
-			return this.external.fetch(url, methods); // just pass through
+			return globalThis.fetch(url, methods);
 		}
 	};
 }
