@@ -1,27 +1,15 @@
-[submodule "v86"]
+[submodule "external/v86"]
 	path = external/v86
-	url = https://github.com/MercuryWorkshop/v86
-[submodule "chimerix"]
-	path = external/chimerix
-	url = https://github.com/MercuryWorkshop/chimerix.git
-[submodule "native-file-system-adapter"]
+	url = https://github.com/Red60sapphire/v86
+[submodule "external/native-file-system-adapter"]
 	path = external/native-file-system-adapter
-	url = https://github.com/MercuryWorkshop/native-file-system-adapter/
+	url = https://github.com/Red60sapphire/native-file-system-adapter
+[submodule "external/aethera"]
+	path = external/aethera
+	url = https://github.com/Red60sapphire/aethera
+[submodule "external/red-browser.js"]
+	path = external/red-browser.js
+	url = https://github.com/Red60sapphire/red-browser.js
 [submodule "x86_image_wizard/epoxy"]
 	path = x86_image_wizard/epoxy
 	url = https://github.com/MercuryWorkshop/epoxy-tls
-[submodule "anura-browserjs"]
-	path = external/anura-browserjs
-	url = https://github.com/mercuryworkshop/RedOS-browserjs
-[submodule "external/external/v86"]
-	path = external/external/v86
-	url = https://github.com/Red60sapphire/v86
-[submodule "external/external/native-file-system-adapter"]
-	path = external/external/native-file-system-adapter
-	url = https://github.com/Red60sapphire/native-file-system-adapter
-[submodule "external/external/red-browser.js"]
-	path = external/external/red-browser.js
-	url = https://github.com/Red60sapphire/red-browser.js
-[submodule "external/external/aethera"]
-	path = external/external/aethera
-	url = https://github.com/Red60sapphire/aethera
