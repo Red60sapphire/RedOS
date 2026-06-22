@@ -163,7 +163,7 @@ tsc:
 	cd build/; \
 	(find lib -type f -name "*.d.ts" -exec cp --parents {} ../redos-types/ \;)
 	(cd build && find lib -type f -name "*.d.ts") | sed 's/ \+/\n/g' | sed 's|.*|/// <reference path="&" />|' > redos-types/index.d.ts
-	jq 'del(.dependencies, .devDependencies) | .name = "@mercuryworkshop/redos-types" | .description = "Type declarations for redOS" | .types = "index.d.ts"' package.json > redos-types/package.json
+	jq 'del(.dependencies, .devDependencies) | .name = "redos-types" | .description = "Type declarations for redOS" | .types = "index.d.ts"' package.json > redos-types/package.json
 css: src/*.css
 	# shopt -s globstar; cat src/**/*.css | npx postcss --use autoprefixer -o build/bundle.css
 	shopt -s globstar; cat src/**/*.css > build/bundle.css

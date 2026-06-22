@@ -3,16 +3,16 @@
 	"version": "2.0.0",
 	"type": "module",
 	"description": "webOS that has v86 capabilities and a modular app system",
-"repository": {
+	"repository": {
 		"type": "git",
-		"url": "https://github.com/MercuryWorkshop/RedOS"
+		"url": "https://github.com/Red60sapphire/RedOS"
 	},
-	"author": "Mercury Workshop",
+	"author": "Red60",
 	"license": "AGPL-3.0-only",
 	"bugs": {
-		"url": "https://github.com/MercuryWorkshop/RedOS/issues"
+		"url": "https://github.com/Red60sapphire/RedOS/issues"
 	},
-	"homepage": "https://github.com/MercuryWorkshop/RedOS#readme",
+	"homepage": "https://github.com/Red60sapphire/RedOS#readme",
 	"dependencies": {
 		"workbox-cli": "7.4.0",
 		"mime": "^4.0.7",
