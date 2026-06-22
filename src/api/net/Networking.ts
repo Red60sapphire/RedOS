@@ -22,7 +22,6 @@ class Networking {
 		});
 		document.addEventListener("libcurl_load", () => {
 			this.libcurl.set_websocket(wisp_server);
-			this.external.fetch = this.libcurl.fetch;
 
 			Object.assign(this, {
 				WebSocket: this.libcurl.WebSocket,
