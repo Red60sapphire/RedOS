@@ -3,7 +3,7 @@ class Networking {
 	libcurl_src = "/libs/libcurl/libcurl.mjs";
 	libcurl_wasm = "/libs/libcurl/libcurl.wasm";
 	external = {
-		fetch: window.fetch, // Default until another thing is registered ig
+		fetch: window.fetch.bind(window),
 	};
 	WebSocket: typeof WebSocket;
 	Socket: any;
