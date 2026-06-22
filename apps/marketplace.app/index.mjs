@@ -32,12 +32,11 @@ window.saved = $state({
 	repos: Object.entries(
 		(await persistence.get("repos")) || {
 			"Red App Repository":
-				"https://raw.githubusercontent.com/MercuryWorkshop/red-repo/master/",
+				"https://raw.githubusercontent.com/MercuryWorkshop/anura-repo/master/",
 			"Red Developer Repository":
-				"https://raw.githubusercontent.com/MercuryWorkshop/red-developer-repo/master/",
-			"Red Games": "https://games.red.pro/",
+				"https://raw.githubusercontent.com/MercuryWorkshop/anura-developer-repo/master/",
 			"Red Extras":
-				"https://raw.githubusercontent.com/BomberFish/red-repo/master/",
+				"https://raw.githubusercontent.com/BomberFish/anura-repo/master/",
 		},
 	),
 });
