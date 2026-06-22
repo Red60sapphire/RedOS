@@ -12,4 +12,4 @@
 	url = https://github.com/Red60sapphire/red-browser.js
 [submodule "x86_image_wizard/epoxy"]
 	path = x86_image_wizard/epoxy
-	url = https://github.com/MercuryWorkshop/epoxy-tls
+	url = https://github.com/Red60sapphire/proxypickle
