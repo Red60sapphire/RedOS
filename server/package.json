@@ -3,14 +3,14 @@
 	"type": "module",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/MercuryWorkshop/RedOS.git"
+		"url": "git+https://github.com/Red60sapphire/RedOS.git"
 	},
-	"author": "Mercury Workshop",
+	"author": "Red60",
 	"license": "AGPL-3.0-only",
 	"bugs": {
-		"url": "https://github.com/MercuryWorkshop/RedOS/issues"
+		"url": "https://github.com/Red60sapphire/RedOS/issues"
 	},
-	"homepage": "https://github.com/MercuryWorkshop/RedOS#readme",
+	"homepage": "https://github.com/Red60sapphire/RedOS#readme",
 	"dependencies": {
 		"@mercuryworkshop/wisp-js": "^0.4.1",
 		"express": "^4.22.2",
