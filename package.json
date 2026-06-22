@@ -1,0 +1,43 @@
+{
+	"name": "RedOS",
+	"version": "2.0.0",
+	"type": "module",
+	"description": "webOS that has v86 capabilities and a modular app system",
+"repository": {
+		"type": "git",
+		"url": "https://github.com/MercuryWorkshop/RedOS"
+	},
+	"author": "Mercury Workshop",
+	"license": "AGPL-3.0-only",
+	"bugs": {
+		"url": "https://github.com/MercuryWorkshop/RedOS/issues"
+	},
+	"homepage": "https://github.com/MercuryWorkshop/RedOS#readme",
+	"dependencies": {
+		"workbox-cli": "7.4.0",
+		"mime": "^4.0.7",
+		"idb-keyval": "^6.2.5",
+		"comlink": "^4.4.2",
+		"dreamland": "0.0.25",
+		"filer": "^1.4.1",
+		"fflate": "^0.8.3",
+		"libcurl.js": "^0.7.4",
+		"autoprefixer": "^10.4.22",
+		"postcss": "^8.5.15",
+		"postcss-cli": "^11.0.1",
+		"typescript": "^5.9.3"
+	},
+	"devDependencies": {
+		"@types/node": "^25.9.1",
+		"@types/wicg-file-system-access": "2023.10.7",
+		"eslint": "^10.4.1",
+		"globals": "^17.6.0",
+		"@eslint/eslintrc": "^3.3.5",
+		"@eslint/js": "^10.0.1",
+		"@typescript-eslint/eslint-plugin": "^8.60.1",
+		"@typescript-eslint/parser": "^8.60.1",
+		"prettier": "^3.8.3",
+		"rollup": "^4.61.0",
+		"tsc-watch": "7.2.0"
+	}
+}

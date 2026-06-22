@@ -1,0 +1,10 @@
+{
+	"name": "Store",
+	"icon": "google-play.svg",
+	"package": "red.libstore",
+	"versions": {
+		"2.0.0": "index.js"
+	},
+	"cache": true,
+	"currentVersion": "2.0.0"
+}

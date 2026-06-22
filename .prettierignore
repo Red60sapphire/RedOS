@@ -1,0 +1,8 @@
+/apps/ashell.app/hterm_all.js
+/apps/term.app/hterm_all.js
+/apps/libphoenix.lib/bundle.mjs
+/bin/
+/build/**/*
+/external/**/*
+/x86_image_wizard/epoxy/**/*
+/static/

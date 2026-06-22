@@ -1,0 +1,139 @@
+// importing libaries
+self.fflate = await red.import("npm:fflate");
+self.mime = await red.import("npm:mime");
+
+// globals
+self.filePicker = false;
+self.fs = red.fs;
+self.sh = new red.fs.Shell();
+self.Buffer = Filer.Buffer;
+self.currentlySelected = [];
+self.clipboard = [];
+self.removeAfterPaste = false;
+
+// components
+import { Item } from "./components/Item.mjs";
+import { TopBar } from "./components/TopBar.mjs";
+import { SideBar } from "./components/SideBar.mjs";
+import { Selector } from "./components/Selector.mjs";
+
+// Wrapped in a fragment because for some reason html`<style />` doesn't work
+document.head.appendChild(
+	html`<><style data-id="red-theme">${red.ui.theme.css()}</style></>`,
+);
+
+document.addEventListener("red-theme-change", () => {
+	document.head.querySelector('style[data-id="red-theme"]').innerHTML =
+		red.ui.theme.css();
+});
+
+const url = new URL(window.location.href);
+if (url.searchParams.get("picker")) {
+	const picker = ExternalApp.deserializeArgs(url.searchParams.get("picker"));
+	if (picker) {
+		self.filePicker = {};
+		self.filePicker.regex = new RegExp(picker[0]);
+		self.filePicker.type = picker[1];
+		self.filePicker.multiple = picker[2];
+		self.filePicker.id = picker[3];
+	}
+}
+
+function App() {
+	this.css = `
+        background-color: var(--theme-bg);
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        .fileView {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+    `;
+
+	return html`
+        <div id="app">
+            <${SideBar}></${SideBar}>
+            <div class="fileView">
+                <${TopBar}></${TopBar}>
+                <hr>
+                <table on:click=${(e) => {
+									if (e.currentTarget === e.target) {
+										currentlySelected.forEach((row) => {
+											row.classList.remove("selected");
+										});
+										currentlySelected = [];
+									}
+								}}>
+                    <thead>
+                        <tr>
+                            <th data-type="icon">
+                                <span
+                                    class="resize-handle hidden-resize-handle"
+                                ></span>
+                            </th>
+                            <th data-type="name">
+                                Name<span class="resize-handle"></span>
+                            </th>
+                            <th data-type="size">
+                                Size<span class="resize-handle"></span>
+                            </th>
+                            <th data-type="type">
+                                Type<span class="resize-handle"></span>
+                            </th>
+                            <th data-type="modified">
+                                Date modified<span class="resize-handle"></span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+            </div>
+			
+        </div>
+    `;
+}
+
+self.loadPath = async (path) => {
+	console.debug("loading path: ", path);
+	const files = await fs.promises.readdir(path + "/");
+	files.sort();
+	console.debug("files: ", files);
+	setBreadcrumbs(path);
+	const table = document.querySelector("tbody");
+	table.innerHTML = "";
+	for (const file of files) {
+		const stats = await fs.promises.stat(`${path}/${file}`);
+		const ext = file.split("/").pop().split(".").pop();
+		let element;
+		if (stats.isDirectory()) {
+			element = html`<${Item} type="dir" path=${path} file=${file} stats=${stats} ext=${ext}></${Item}>`;
+		} else {
+			if (
+				self.filePicker &&
+				self.filePicker.type !== "dir" &&
+				self.filePicker.regex.test(ext)
+			) {
+				continue;
+			}
+			element = html`<${Item} type="file" path=${path} file=${file} stats=${stats} ext=${ext}></${Item}>`;
+		}
+		// oh my god this is horrid
+		table.appendChild(element.children[1].children[0]);
+	}
+};
+
+const root = document.getElementById("app");
+try {
+	root.replaceWith(h(App));
+	if (filePicker) {
+		document.getElementById("app").appendChild(h(Selector));
+	}
+} catch (e) {
+	root.replaceWith(document.createTextNode("" + e));
+	throw e;
+}
+loadPath("/");

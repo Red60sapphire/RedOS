@@ -1,0 +1,15 @@
+#!/bin/bash
+if [ -f /var/red-run_lock ]; then
+    PID=$(</var/red-run_lock)
+    if [ -d /proc/$PID/ ]; then
+        echo red-run interface occupied, trying again..
+        sleep 1
+        exec red-run $@
+        exit
+    fi
+fi
+echo -n $$ > /var/red-run_lock
+echo -ne "\0" > /dev/hvc1 # clear buffer by executing whatevers in it
+cat $1 > /dev/hvc1
+echo -ne "\0" > /dev/hvc1
+rm /var/red-run_lock

@@ -1,0 +1,15 @@
+#!/sbin/openrc-run
+
+description="Run Red Boot Scripts"
+
+start() {
+  ebegin "Running Red Boot Scripts"
+  ifupdown ifup eth0
+  ip link set lo up
+  eend $?
+}
+
+stop() {
+  ebegin "Stopping Red Boot Scripts"
+  eend $?
+}

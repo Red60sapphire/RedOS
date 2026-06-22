@@ -1,0 +1,16 @@
+{
+	"name": "@mercuryworkshop/redos-types",
+	"version": "$VER",
+	"description": "Type declarations for redOS",
+	"types": "index.d.ts",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/MercuryWorkshop/RedOS"
+	},
+	"author": "Mercury Workshop",
+	"license": "AGPL-3.0-only",
+	"bugs": {
+		"url": "https://github.com/MercuryWorkshop/RedOS/issues"
+	},
+	"homepage": "https://github.com/MercuryWorkshop/RedOS#readme"
+}
