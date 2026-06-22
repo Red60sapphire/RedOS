@@ -151,6 +151,7 @@ class IframeProcess extends Process {
 
 		Object.assign(this.frame.contentWindow!, {
 			red,
+			anura: red,
 			AliceWM,
 			ExternalApp,
 			LocalFS,

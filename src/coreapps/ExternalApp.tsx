@@ -153,6 +153,7 @@ class ExternalApp extends App {
 
 			Object.assign(iframe.contentWindow as any, {
 				red,
+				anura: red,
 				AliceWM,
 				ExternalApp,
 				LocalFS,
