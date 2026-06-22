@@ -125,6 +125,7 @@ window.addEventListener("load", async () => {
 	}
 
 	red = await Red.new(conf);
+	(window as any).anura = red;
 	if (bootStrapFs instanceof LocalFS) {
 		red.settings.cache["bootFromOPFS"] = true;
 	} else {
