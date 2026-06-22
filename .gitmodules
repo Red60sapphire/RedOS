@@ -13,3 +13,15 @@
 [submodule "anura-browserjs"]
 	path = external/anura-browserjs
 	url = https://github.com/mercuryworkshop/RedOS-browserjs
+[submodule "external/external/v86"]
+	path = external/external/v86
+	url = https://github.com/Red60sapphire/v86
+[submodule "external/external/native-file-system-adapter"]
+	path = external/external/native-file-system-adapter
+	url = https://github.com/Red60sapphire/native-file-system-adapter
+[submodule "external/external/red-browser.js"]
+	path = external/external/red-browser.js
+	url = https://github.com/Red60sapphire/red-browser.js
+[submodule "external/external/aethera"]
+	path = external/external/aethera
+	url = https://github.com/Red60sapphire/aethera
