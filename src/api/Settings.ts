@@ -27,16 +27,8 @@ class Settings {
 			initial["i-am-a-true-gangsta"] = false;
 		}
 
-		if (!initial["wisp-url"]) {
-			let url = "";
-			if (location.protocol == "https:") {
-				url += "wss://";
-			} else {
-				url += "ws://";
-			}
-			url += window.location.origin.split("://")[1];
-			url += "/";
-			initial["wisp-url"] = url;
+		if (initial["wisp-url"] === undefined) {
+			initial["wisp-url"] = "";
 		}
 
 		if (!initial["x86-memory"]) {

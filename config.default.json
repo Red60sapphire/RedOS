@@ -19,6 +19,7 @@
 		"/bin/redd.ajs"
 	],
 	"defaultsettings": {
+		"wisp-url": "wss://ws.redos.live/",
 		"use-sw-cache": false,
 		"applist": [		"red.browser", "red.settings", "red.fsapp"
 ],

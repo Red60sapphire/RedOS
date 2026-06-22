@@ -412,12 +412,14 @@ class WispBus {
 		return WispWebSocket;
 	}
 
-	constructor(upstreamProvider: WebSocket | RTCDataChannel) {
-		this.upstream = upstreamProvider;
-		this.upstream.binaryType = "arraybuffer";
-		this.upstream.addEventListener("message", (e: MessageEvent) => {
-			this.handleIncomingPacket(new Uint8Array(e.data), "upstream");
-		});
+	constructor(upstreamProvider: WebSocket | RTCDataChannel | null) {
+		this.upstream = upstreamProvider!;
+		if (upstreamProvider) {
+			upstreamProvider.binaryType = "arraybuffer";
+			upstreamProvider.addEventListener("message", (e: MessageEvent) => {
+				this.handleIncomingPacket(new Uint8Array(e.data), "upstream");
+			});
+		}
 	}
 }
 

@@ -11,7 +11,7 @@ class Networking {
 	bus: WispBus;
 	WSProxyEmulation: any;
 	constructor(wisp_server: string) {
-		this.bus = new WispBus(new WebSocket(wisp_server));
+		this.bus = new WispBus(wisp_server ? new WebSocket(wisp_server) : null as any);
 		this.WSProxyEmulation = this.bus.getFakeWSProxySocket();
 
 		//@ts-ignore
