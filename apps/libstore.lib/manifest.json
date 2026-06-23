@@ -3,8 +3,8 @@
 	"icon": "google-play.svg",
 	"package": "red.libstore",
 	"versions": {
-		"2.0.0": "index.js"
+		"2.0.0": "index.js?v=2"
 	},
-	"cache": true,
+	"cache": false,
 	"currentVersion": "2.0.0"
 }
