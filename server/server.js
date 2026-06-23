@@ -18,10 +18,9 @@ const port = process.env.PORT || 8000;
 
 app.use((req, res, next) => {
 	// cors
-	res.header("Cross-Origin-Embedder-Policy", "require-corp");
+	res.header("Cross-Origin-Embedder-Policy", "credentialless");
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Cross-Origin-Opener-Policy", "same-origin");
-	res.header("Cross-Origin-Resource-Policy", "same-site");
 	next();
 });
 

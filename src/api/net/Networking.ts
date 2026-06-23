@@ -44,16 +44,16 @@ class Networking {
 		},
 	};
 	fetch = async (url: any, methods: any) => {
-		// these are any because they can be multiple things and I dont feel like typing them
-		let requestObj: Request;
-		if (url instanceof Request) {
-			requestObj = url;
-		} else {
-			if (methods) requestObj = new Request(url, methods);
-			else requestObj = new Request(url);
-		}
-		const urlObj = new URL(requestObj.url);
+		const urlStr = url instanceof Request ? url.url : url;
+		const urlObj = new URL(urlStr);
 		if (urlObj.hostname === "localhost") {
+			let requestObj: Request;
+			if (url instanceof Request) {
+				requestObj = url;
+			} else {
+				if (methods) requestObj = new Request(url, methods);
+				else requestObj = new Request(url);
+			}
 			// we will assume if theres no port, its 80, god forbid it being 443
 			const port = Number(urlObj.port) || 80;
 
@@ -148,7 +148,16 @@ class Networking {
 				return new Response();
 			}
 		} else {
-			return globalThis.fetch(url, methods);
+			try {
+				return await globalThis.fetch(url, methods);
+			} catch (e) {
+				console.error("RedOS networking fetch failed:", {
+					url: urlStr,
+					error: e,
+					crossOriginIsolated: (globalThis as any).crossOriginIsolated,
+				});
+				throw e;
+			}
 		}
 	};
 }

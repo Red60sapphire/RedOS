@@ -7,12 +7,13 @@ function RepoItem() {
 				state.currentScreen = "itemList";
 			};
 		} catch (e) {
+			console.error(`Marketplace fetch failed for repo "${this.reponame}" (${this.repourl}):`, e);
 			this.repoNameElement.innerText += " (Error)";
 			this.root.style.color = "red";
 			this.root.onclick = () => {
 				red.dialog.alert(
-					`Repo ${this.reponame} encountered an error: ${e}`,
-					"Repo encountered error.",
+					`Repo "${this.reponame}" failed to load.\n\nError: ${e}\n\nURL: ${this.repourl}\n\nTry adding a different repo URL, or check your network connection. If you are behind a firewall or proxy, raw.githubusercontent.com may be blocked.`,
+					"Repository Error",
 				);
 			};
 		}

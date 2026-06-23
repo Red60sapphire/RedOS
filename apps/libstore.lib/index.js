@@ -88,9 +88,13 @@ export class StoreRepo {
 
 	async refreshRepoCache() {
 		try {
-			let list = await (
-				await this.client.fetch(this.baseUrl + "list.json")
-			).json();
+			let response = await this.client.fetch(this.baseUrl + "list.json");
+			if (!response.ok) {
+				throw new Error(
+					`Failed to fetch repo list (HTTP ${response.status})`,
+				);
+			}
+			let list = await response.json();
 			let repoCache = {};
 			for (const category in list) {
 				repoCache[`${category}`] = [];
@@ -111,13 +115,16 @@ export class StoreRepo {
 	}
 
 	async getRepoManifest() {
-		let manifest = await await this.client.fetch(
+		let response = await this.client.fetch(
 			this.baseUrl + "manifest.json",
 		);
-		if (manifest.ok) {
-			this.manifest = await manifest.json();
+		if (response.ok) {
+			this.manifest = await response.json();
 			return this.manifest.version;
 		} else {
+			console.warn(
+				`Repo manifest not found at ${this.baseUrl}manifest.json (HTTP ${response.status}), falling back to legacy mode`,
+			);
 			return "legacy";
 		}
 	}
@@ -339,9 +346,13 @@ export class StoreRepoLegacy {
 	}
 
 	async refreshRepoCache() {
-		this.repoCache = await (
-			await this.client.fetch(this.baseUrl + "list.json")
-		).json();
+		let response = await this.client.fetch(this.baseUrl + "list.json");
+		if (!response.ok) {
+			throw new Error(
+				`Failed to fetch repo list (HTTP ${response.status})`,
+			);
+		}
+		this.repoCache = await response.json();
 	}
 
 	refreshThumbCache() {
