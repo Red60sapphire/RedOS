@@ -3,7 +3,7 @@
 workbox.routing.registerRoute(
 	/^(?!.*(\/config.json|\/MILESTONE|\/x86images\/|\/service\/))/,
 	async (event) => {
-		if (new URL(event.url).origin !== self.location.origin) return false;
+		if (new URL(event.url).origin !== self.location.origin) return;
 		await bootStrapFSReady;
 		if (cacheenabled === undefined) {
 			console.debug("retrieving cache value");

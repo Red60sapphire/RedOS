@@ -3,7 +3,7 @@ class Networking {
 	libcurl_src = "/libs/libcurl/libcurl.mjs";
 	libcurl_wasm = "/libs/libcurl/libcurl.wasm";
 	external = {
-		fetch: (req: any, opts?: any) => window.fetch(req, opts),
+		fetch: window.fetch,
 	};
 	WebSocket: typeof WebSocket;
 	Socket: any;
@@ -22,6 +22,7 @@ class Networking {
 		});
 		document.addEventListener("libcurl_load", () => {
 			this.libcurl.set_websocket(wisp_server);
+			this.external.fetch = this.libcurl.fetch;
 
 			Object.assign(this, {
 				WebSocket: this.libcurl.WebSocket,
@@ -148,16 +149,7 @@ class Networking {
 				return new Response();
 			}
 		} else {
-			try {
-				return await globalThis.fetch(url, methods);
-			} catch (e) {
-				console.error("RedOS networking fetch failed:", {
-					url: urlStr,
-					error: e,
-					crossOriginIsolated: (globalThis as any).crossOriginIsolated,
-				});
-				throw e;
-			}
+			return await this.external.fetch(url, methods);
 		}
 	};
 }
