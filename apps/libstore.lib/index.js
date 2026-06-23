@@ -70,6 +70,24 @@ function rebrandApp(app) {
 	return app;
 }
 
+const textExtensions = new Set([
+	".html", ".js", ".mjs", ".json", ".css", ".svg", ".txt", ".md",
+	".ts", ".tsx", ".xml", ".yaml", ".yml", ".toml", ".ini", ".cfg",
+]);
+
+function rebrandFile(buffer, filepath) {
+	const ext = filepath.substring(filepath.lastIndexOf(".")).toLowerCase();
+	if (!textExtensions.has(ext)) return buffer;
+	try {
+		let text = new TextDecoder("utf-8", { fatal: true }).decode(buffer);
+		const replaced = text.replace(/[Aa]nura/g, "Red");
+		if (replaced === text) return buffer;
+		return new TextEncoder().encode(replaced);
+	} catch {
+		return buffer;
+	}
+}
+
 export class StoreRepo {
 	baseUrl;
 	name;
@@ -267,7 +285,7 @@ export class StoreRepo {
 					}
 					await fs.promises.writeFile(
 						`${path}/${relativePath}`,
-						await Buffer.from(content),
+						await Buffer.from(rebrandFile(content, relativePath)),
 					);
 				}
 			}
@@ -319,7 +337,7 @@ export class StoreRepo {
 						fs.writeFile(`${path}/${relativePath}`, JSON.stringify(manifest));
 						continue;
 					}
-					fs.writeFile(`${path}/${relativePath}`, await Buffer.from(content));
+					fs.writeFile(`${path}/${relativePath}`, await Buffer.from(rebrandFile(content, relativePath)));
 				}
 			}
 			await sleep(500); // race condition because of manifest.json
@@ -477,11 +495,11 @@ export class StoreRepoLegacy {
 					await fs.promises.mkdir(`${path}/${relativePath}`);
 				} else {
 					if (relativePath == "post_install.js") {
-						let script = new TextDecoder().decode(content);
+						let script = new TextDecoder().decode(rebrandFile(content, relativePath));
 						postInstallScript = script;
 						continue;
 					}
-					fs.writeFile(`${path}/${relativePath}`, await Buffer.from(content));
+					fs.writeFile(`${path}/${relativePath}`, await Buffer.from(rebrandFile(content, relativePath)));
 				}
 			}
 			await sleep(500); // race condition because of manifest.json
@@ -519,7 +537,7 @@ export class StoreRepoLegacy {
 				if (relativePath.endsWith("/")) {
 					await fs.promises.mkdir(`${path}/${relativePath}`);
 				} else {
-					fs.writeFile(`${path}/${relativePath}`, await Buffer.from(content));
+					fs.writeFile(`${path}/${relativePath}`, await Buffer.from(rebrandFile(content, relativePath)));
 				}
 			}
 			await sleep(500); // race condition because of manifest.json
