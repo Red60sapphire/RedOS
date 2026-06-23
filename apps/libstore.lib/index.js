@@ -63,6 +63,13 @@ export class Store {
 	}
 }
 
+function rebrandApp(app) {
+	if (app.name) app.name = app.name.replace(/[Aa]nura/g, "Red");
+	if (app.desc) app.desc = app.desc.replace(/[Aa]nura/g, "Red");
+	if (app.summary) app.summary = app.summary.replace(/[Aa]nura/g, "Red");
+	return app;
+}
+
 export class StoreRepo {
 	baseUrl;
 	name;
@@ -102,6 +109,7 @@ export class StoreRepo {
 					list[category].map(async (app) => {
 						app.baseUrl = this.baseUrl + category + "/" + app.package + "/";
 						app.repo = this.baseUrl;
+						rebrandApp(app);
 						repoCache[`${category}`].push(app);
 					}),
 				);
@@ -353,6 +361,11 @@ export class StoreRepoLegacy {
 			);
 		}
 		this.repoCache = await response.json();
+		for (const category in this.repoCache) {
+			for (const app of this.repoCache[category]) {
+				rebrandApp(app);
+			}
+		}
 	}
 
 	refreshThumbCache() {
