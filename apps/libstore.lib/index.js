@@ -67,6 +67,13 @@ function rebrandApp(app) {
 	if (app.name) app.name = app.name.replace(/[Aa]nura/g, "Red");
 	if (app.desc) app.desc = app.desc.replace(/[Aa]nura/g, "Red");
 	if (app.summary) app.summary = app.summary.replace(/[Aa]nura/g, "Red");
+	if (app.wininfo) {
+		if (typeof app.wininfo === "string") {
+			app.wininfo = app.wininfo.replace(/[Aa]nura/g, "Red");
+		} else if (app.wininfo.title) {
+			app.wininfo.title = app.wininfo.title.replace(/[Aa]nura/g, "Red");
+		}
+	}
 	return app;
 }
 

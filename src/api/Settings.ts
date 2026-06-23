@@ -11,7 +11,7 @@ class Settings {
 				value: this.cache["use-sw-cache"],
 			});
 			console.debug(
-				"ANURA-SW: For this boot, cache will be " +
+				"RED-SW: For this boot, cache will be " +
 					(this.cache["use-sw-cache"] ? "enabled" : "disabled"),
 			);
 		});
