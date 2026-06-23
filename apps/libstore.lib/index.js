@@ -250,6 +250,7 @@ export class StoreRepo {
 					if (relativePath === "manifest.json") {
 						let manifest = new TextDecoder().decode(content);
 						manifest = JSON.parse(manifest);
+						rebrandApp(manifest);
 						manifest.marketplace = {};
 						if (app.version) {
 							manifest.marketplace.version = app.version;
@@ -306,6 +307,7 @@ export class StoreRepo {
 					if (relativePath === "manifest.json") {
 						let manifest = new TextDecoder().decode(content);
 						manifest = JSON.parse(manifest);
+						rebrandApp(manifest);
 						manifest.marketplace = {};
 						if (lib.version) {
 							manifest.marketplace.version = lib.version;
