@@ -78,8 +78,8 @@ function rebrandApp(app) {
 }
 
 const textExtensions = new Set([
-	".html", ".js", ".mjs", ".json", ".css", ".svg", ".txt", ".md",
-	".ts", ".tsx", ".xml", ".yaml", ".yml", ".toml", ".ini", ".cfg",
+	".html", ".json", ".css", ".svg", ".txt", ".md",
+	".xml", ".yaml", ".yml", ".toml", ".ini", ".cfg",
 ]);
 
 function rebrandFile(buffer, filepath) {
