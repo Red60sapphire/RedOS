@@ -346,87 +346,73 @@ async function installx86(tracker = document.getElementById("tracker")) {
 		Filer.Buffer(await initrd.arrayBuffer()),
 	);
 
-	if (typeof red.config.x86[x86image].rootfs === "string") {
-		const rootfs = await fetch(red.config.x86[x86image].rootfs);
-		const blob = await rootfs.blob();
-		//@ts-ignore
-		await red.x86hdd.loadfile(blob);
-	} else if (red.config.x86[x86image].rootfs) {
-		// TODO: add batching, this will bottleneck and OOM if the rootfs is too large
+	if (red.config.x86[x86image].rootfs) {
+		if (typeof red.config.x86[x86image].rootfs === "string") {
+			const rootfs = await fetch(red.config.x86[x86image].rootfs);
+			const blob = await rootfs.blob();
+			//@ts-ignore
+			await red.x86hdd.loadfile(blob);
+		} else {
+			const files: Blob[] = [];
+			let limit = 4;
+			let i = 0;
+			let done = false;
+			let doneSoFar = 0;
+			const doWhenAvail = function () {
+				if (limit === 0) return;
+				limit--;
+				const assigned = i;
+				i++;
 
-		console.debug("fetching");
-		// const files = await Promise.all(
-		//     red.config.x86[x86image].rootfs.map((part: string) => fetch(part)),
-		// );
-
-		const files: Blob[] = [];
-		let limit = 4;
-		let i = 0;
-		let done = false;
-		let doneSoFar = 0;
-		const doWhenAvail = function () {
-			if (limit === 0) return;
-			limit--;
-			const assigned = i;
-			i++;
-
-			fetch(red.config.x86[x86image].rootfs[assigned])
-				.then(async (response) => {
-					if (response.status !== 200) {
-						console.error("Status code bad on chunk " + assigned);
-						console.error(red.config.x86[x86image].rootfs[assigned]);
-						console.error("Finished " + doneSoFar + " chunks before error");
+				fetch(red.config.x86[x86image].rootfs[assigned])
+					.then(async (response) => {
+						if (response.status !== 200) {
+							console.error("Status code bad on chunk " + assigned);
+							red.notifications.add({
+								title: "bad chunk on x86 download",
+								description: `Chunk ${assigned} gave status code ${response.status}\nClick me to reload`,
+								timeout: 50000,
+								callback: () => {
+									location.reload();
+								},
+							});
+							return;
+						}
+						files[assigned] = await response.blob();
+						limit++;
+						doneSoFar++;
+						tracker!.innerHTML = `Downloading x86 rootfs. Chunk ${doneSoFar}/${red.config.x86[x86image].rootfs.length} done`;
+						if (i < red.config.x86[x86image].rootfs.length) {
+							doWhenAvail();
+						}
+						if (doneSoFar === red.config.x86[x86image].rootfs.length) {
+							done = true;
+						}
+					})
+					.catch((e) => {
+						console.error("Error on chunk " + assigned);
 						red.notifications.add({
 							title: "bad chunk on x86 download",
-							description: `Chunk ${assigned} gave status code ${response.status}\nClick me to reload`,
+							description: `Chunk ${assigned} had a download error ${e}\nClick me to reload`,
 							timeout: 50000,
 							callback: () => {
 								location.reload();
 							},
 						});
-						return;
-					}
-					files[assigned] = await response.blob();
-					limit++;
-					doneSoFar++;
-					tracker!.innerHTML = `Downloading x86 rootfs. Chunk ${doneSoFar}/${red.config.x86[x86image].rootfs.length} done`;
-					if (i < red.config.x86[x86image].rootfs.length) {
-						doWhenAvail();
-					}
-					if (doneSoFar === red.config.x86[x86image].rootfs.length) {
-						done = true;
-					}
-					console.debug(
-						red.config.x86[x86image].rootfs.length -
-							doneSoFar +
-							" chunks to go",
-					);
-				})
-
-				.catch((e) => {
-					console.error("Error on chunk " + assigned);
-					red.notifications.add({
-						title: "bad chunk on x86 download",
-						description: `Chunk ${assigned} had a download error ${e}\nClick me to reload`,
-						timeout: 50000,
-						callback: () => {
-							location.reload();
-						},
 					});
-				}); // Peak error handling right there
-		};
-		doWhenAvail();
-		doWhenAvail();
-		doWhenAvail();
-		doWhenAvail();
-		while (!done) {
-			await sleep(200);
-		}
+			};
+			doWhenAvail();
+			doWhenAvail();
+			doWhenAvail();
+			doWhenAvail();
+			while (!done) {
+				await sleep(200);
+			}
 
-		console.debug("constructing blobs...");
-		tracker!.innerText = "Concatenating and installing x86 rootfs";
-		//@ts-ignore
-		await red.x86hdd.loadfile(new Blob(files));
+			tracker!.innerText = "Concatenating and installing x86 rootfs";
+			//@ts-ignore
+			await red.x86hdd.loadfile(new Blob(files));
+		}
 	}
 
 	console.debug("done");

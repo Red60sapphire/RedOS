@@ -268,6 +268,8 @@ class V86Backend {
 		const Buffer = Filer.Buffer;
 		const sh = new fs.Shell();
 
+		const hasRootfs = virt_hda.size > 0;
+
 		this.emulator = new V86({
 			wasm_path: "/lib/v86.wasm",
 			memory_size: red.settings.get("x86-memory") * 1024 * 1024,
@@ -286,8 +288,9 @@ class V86Backend {
 				async: true,
 			},
 
-			cmdline:
-				"rw init=/sbin/init root=/dev/sda rootfstype=ext4 random.trust_cpu=on 8250.nr_uarts=10 spectre_v2=off pti=off mitigations=off ipv6.disable=1",
+			cmdline: hasRootfs
+				? "rw init=/sbin/init root=/dev/sda rootfstype=ext4 random.trust_cpu=on 8250.nr_uarts=10 spectre_v2=off pti=off mitigations=off ipv6.disable=1"
+				: "random.trust_cpu=on 8250.nr_uarts=10 spectre_v2=off pti=off",
 			filesystem: { fs, sh, Path, Buffer },
 
 			bios: { url: "/bios/seabios.bin" },
