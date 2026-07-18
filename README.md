@@ -91,8 +91,4 @@ See the current index of documentation [here](./documentation/README.md).
 
 See [SECURITY.md](./SECURITY.md) for reporting instructions.
 
-## Credits
-
-RedOS is created by [Mercury Workshop](https://mercurywork.shop). Linux emulation is based off of the [v86](https://github.com/copy/v86) project. For more credits, see [CREDITS.MD](./CREDITS.md).
-
 (p.s. for hackers: the entrypoint to red is [src/Boot.tsx](./src/Boot.tsx))
