@@ -63,6 +63,11 @@ class Settings {
 			fs.writeFile("/red_settings.json", JSON.stringify(initial));
 		}
 
+		// Migrate off the dead default WISP host so existing installs recover.
+		if (initial["wisp-url"] === "wss://ws.redos.live/") {
+			initial["wisp-url"] = "wss://anura.pro/";
+		}
+
 		return new Settings(fs, initial);
 	}
 

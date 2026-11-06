@@ -151,6 +151,12 @@ window.addEventListener("load", async () => {
 	swShared.red = red;
 	swShared.sh = new red.fs.Shell();
 	async function initComlink() {
+		const controller = navigator.serviceWorker.controller;
+		// On the very first load the controller is null until the service worker
+		// activates and claims this client. Waiting for the "controllerchange"
+		// listener below avoids throwing before the SW is ready.
+		if (!controller) return;
+
 		const { port1, port2 } = new MessageChannel();
 
 		const msg = {
@@ -160,9 +166,9 @@ window.addEventListener("load", async () => {
 
 		comlink.expose(swShared, port1);
 
-		navigator.serviceWorker.controller!.postMessage(msg, [port2]);
+		controller.postMessage(msg, [port2]);
 		if (swShared.red)
-			navigator.serviceWorker.controller!.postMessage({
+			controller.postMessage({
 				red_target: "red.nohost.set",
 			});
 	}
@@ -170,6 +176,7 @@ window.addEventListener("load", async () => {
 	navigator.serviceWorker.addEventListener("controllerchange", initComlink);
 
 	await navigator.serviceWorker.register("/red-sw.js");
+	await navigator.serviceWorker.ready;
 	initComlink();
 
 	navigator.serviceWorker.addEventListener("message", (event) => {
